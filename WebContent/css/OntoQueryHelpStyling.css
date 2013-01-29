@@ -1,0 +1,14 @@
+@CHARSET "ISO-8859-1";
+
+p.solution {
+	font-weight: bold;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: 1px solid gray;
+}
+
+#helpContent {
+	margin: 15px;
+}
