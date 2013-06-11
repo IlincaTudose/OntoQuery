@@ -15,7 +15,7 @@
       </dependency>
       <dependency>
           <groupId>net.sourceforge.owlapi</groupId>
-          <artifactId>owlapi-parent</artifactId>
+          <artifactId>owlapi-bin</artifactId>
           <version>3.4.2</version>
       </dependency>
       <dependency>
