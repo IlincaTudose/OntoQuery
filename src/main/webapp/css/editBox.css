@@ -1,0 +1,92 @@
+@CHARSET "ISO-8859-1";
+
+.booleanConstructor {
+	color: #00CC99;
+}
+
+.restriction {
+	color: #CC6699;
+}
+
+.paranthesis {
+	color: #303030;
+}
+
+.classStyle {
+	color: #000000;
+}
+
+.relationStyle {
+	color: #999966
+}
+
+#incompleteIcon {
+	float: left;
+	height: 20px;
+	visibility: hidden;
+}
+
+.dl_edit { /* text styling */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small;
+	font-weight: bold;
+	/* box styling */
+	border-style: solid;
+	border-width: 1px;
+	border-color: #93A3A3;
+	/* It's nicer to leave a small space between the border and the text */
+	padding-left: 3px;
+	/* set size */
+	width: 300px;
+	min-height: 20px;
+	max-height: 100px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	/*force line break for long words */
+	white-space: pre-wrap; /* CSS3 */
+	white-space: -moz-pre-wrap; /* Firefox */
+	white-space: -pre-wrap; /* Opera <7 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* IE */
+}
+
+.errorStyle {
+	font-weight: bold;
+	color: red;
+}
+
+.expectedTokensStyle {
+	color: #476B6B;
+	padding-left: 5px;
+	font-weight: bold;
+}
+
+#editBoxDiv{
+	/*padding-top: 100px;*/
+	margin: auto;
+}
+
+.headerBG {
+    background-image:-webkit-linear-gradient(left, #064f82, #3572a2);
+    background-image: -moz-linear-gradient(left, #064f82, #3572a2);
+    background-image: -ms-linear-gradient(left, #064f82, #3572a2);
+    background-image: -o-linear-gradient(left, #064f82, #3572a2);
+    background-image: linear-gradient(left,#064f82,#3572a2);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#064f82', EndColorStr='#3572a2'); /* IE6/7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#064f82', EndColorStr='#3572a2')"; /* IE8*/
+}
+
+.local-header {
+    font-size: 11pt;
+    color: #006666;
+    padding: 4px;
+    background: #eef5f5;
+    border: 1px solid #bfbfbf;
+    margin: 5px 0px 10px 0px;
+    font-weight: bold;
+}
+
+.sidemenu li {
+    padding-bottom:  2px;
+}
+
