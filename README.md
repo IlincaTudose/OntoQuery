@@ -12,4 +12,4 @@ If you use OWL and no changes are made, just remove [.replaceAll("CHEBI_", "CHEB
 6. After deploying the webapp call  " /adminInput.jsp " and load the ontology.
 7. You should see the message about loading the ontology.
 
-Note: without DensityExpansionLimit, the RDFXML  parser will fail to parse the file.
+Note: without DensityExpansionLimit, the RDFXML  parser will fail to parse the owl/obo file.
