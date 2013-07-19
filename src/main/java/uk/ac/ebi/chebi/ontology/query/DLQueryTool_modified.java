@@ -13,12 +13,10 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
 import owltools.graph.OWLGraphWrapper;
 
@@ -26,40 +24,33 @@ import owltools.graph.OWLGraphWrapper;
 public class DLQueryTool_modified {
 
 
-/**
- * Modified version of the DLQueryTool from the OWLTools library.
- * source: http://owltools.googlecode.com/svn/trunk/OWLTools-Core/src/main/java/owltools/mooncat/DLQueryTool.java
- */
-	private static final Logger LOG = Logger.getLogger(DLQueryTool_modified.class);
-	
 	/**
-	 * Execute the DL query on the given ontology graph. Uses the factory to create 
-	 * the {@link OWLReasoner} for an internal query ontology.
-	 * 
-	 * @param dlQuery
-	 * @param graph
-	 * @param reasonerFactory
-	 * @return set of {@link OWLClass} which 
-	 * @throws ParserException
-	 * @throws OWLOntologyCreationException
+	 * Modified version of the DLQueryTool from the OWLTools library.
+	 * source: http://owltools.googlecode.com/svn/trunk/OWLTools-Core/src/main/java/owltools/mooncat/DLQueryTool.java
 	 */
-	
-	public static OWLClassExpression parseQuery(String query, OWLGraphWrapper graph) throws Exception{
-		ManchesterSyntaxTool parser = null;		
+	transient static final Logger logger = Logger.getLogger(DLQueryTool_modified.class);
+
+	/**
+	 * Execute the DL query on the given ontology graph. Uses the factory to create
+	 * the {@link OWLReasoner} for an internal query ontology.
+	 */
+
+	public static OWLClassExpression parseQuery(String query, OWLGraphWrapper graph) throws Exception {
+		ManchesterSyntaxTool parser = null;
 		OWLClassExpression ce = null;
 		OWLOntology ont = graph.getSourceOntology();
 		try {
 			parser = new ManchesterSyntaxTool(ont);
 			ce = parser.parseManchesterExpression(query);
-		} catch(ParserException e){
+		} catch (ParserException e) {
 			String errMessage = "There was a problem parsing token ";
 			String tok = "";
 			if (graph.getOWLObjectByIdentifier(e.getCurrentToken().replaceAll("CHEBI_", "CHEBI:")) != null)
 				tok = graph.getLabel(graph.getOWLObjectByIdentifier(e.getCurrentToken().replaceAll("CHEBI_", "CHEBI:")));
-			else 
+			else
 				tok = e.getCurrentToken();
 			errMessage += "<b>" + tok + "</b> or the query is not compete. <br/>";
-			errMessage += "The parser expected one of : "+ (e.getMessage().split("Expected one of:")[1]) + "." ;
+			errMessage += "The parser expected one of : " + (e.getMessage().split("Expected one of:")[1]) + ".";
 			throw new Exception(errMessage);
 		} finally {
 			// always dispose parser to avoid a memory leak
@@ -69,52 +60,43 @@ public class DLQueryTool_modified {
 		}
 		return ce;
 	}
-	
-	public static Set<OWLClass> executeDLQuery(String dlQuery, OWLGraphWrapper graph, 
-			OWLReasoner reasoner) throws ParserException, OWLOntologyCreationException, Exception 
-	{
+
+	public static Set<OWLClass> executeDLQuery(String dlQuery, OWLGraphWrapper graph, OWLReasoner reasoner) throws Exception {
 		// create parser and parse DL query string
 		OWLClassExpression ce = parseQuery(dlQuery, graph);
 		long start = System.currentTimeMillis();
 		// create query ontology
-		OWLOntologyManager m = OWLManager.createOWLOntologyManager(); 
-		OWLOntology queryOntology = m.createOntology(IRI.generateDocumentIRI(), graph.getAllOntologies()); 
-		LOG.info("Loading the ontology took " + (System.currentTimeMillis() - start) + "ms.");
+		OWLOntologyManager m = OWLManager.createOWLOntologyManager();
+		OWLOntology queryOntology = m.createOntology(IRI.generateDocumentIRI(), graph.getAllOntologies());
+		logger.info("Loading the ontology took " + (System.currentTimeMillis() - start) + "ms.");
 		start = System.currentTimeMillis();
 		OWLDataFactory f = m.getOWLDataFactory();
 		OWLClass qc = f.getOWLClass(IRI.create("http://owltools.org/Q"));
 		OWLEquivalentClassesAxiom ax = f.getOWLEquivalentClassesAxiom(ce, qc);
 		m.addAxiom(queryOntology, ax);
-		
+
 		Set<OWLClass> subset = executeQuery(ce, graph.getSourceOntology(), reasoner);
-		if(subset.isEmpty()) {
-			LOG.warn("No classes found for query subclass of:"+dlQuery);
+		if (subset.isEmpty()) {
+			logger.warn("No classes found for query subclass of:" + dlQuery);
 		}
+		logger.info("Results found in " + (System.currentTimeMillis() - start) + "ms.");
 		return subset;
 	}
 
 	/**
-	 * Execute the DL query on the given ontology graph. Uses the factory to create 
+	 * Execute the DL query on the given ontology graph. Uses the factory to create
 	 * the {@link OWLReasoner} for an internal query ontology.
-	 * 
-	 * @param queryObject
-	 * @param ontology
-	 * @param reasonerFactory
-	 * @return set of {@link OWLClass} which 
 	 */
-	
-	static Set<OWLClass> executeQuery(OWLClassExpression queryObject, OWLOntology ontology, 
-			OWLReasoner reasoner) 
-	{
+
+	static Set<OWLClass> executeQuery(OWLClassExpression queryObject, OWLOntology ontology, OWLReasoner reasoner) {
 		Set<OWLClass> subset = new HashSet<OWLClass>();
 		long start = System.currentTimeMillis();
-		
 		try {
-			LOG.info("is precomputed (before): " + reasoner.isPrecomputed(InferenceType.CLASS_HIERARCHY));
-			LOG.info("is precomputed: " + reasoner.isPrecomputed(InferenceType.CLASS_HIERARCHY));
-			LOG.info("Precomputing inferences took " + (System.currentTimeMillis() - start) + "ms.");
+			logger.info("is precomputed (before): " + reasoner.isPrecomputed(InferenceType.CLASS_HIERARCHY));
+			logger.info("is precomputed: " + reasoner.isPrecomputed(InferenceType.CLASS_HIERARCHY));
+			logger.info("Precomputing inferences took " + (System.currentTimeMillis() - start) + "ms.");
 			start = System.currentTimeMillis();
-			LOG.info("Start evaluation for DL query subclass of: "+queryObject);
+			logger.info("Start evaluation for DL query subclass of: " + queryObject);
 			NodeSet<OWLClass> node = reasoner.getSubClasses(queryObject, false);
 			if (node != null) {
 				Set<OWLClass> classes = node.getFlattened();
@@ -124,20 +106,12 @@ public class DLQueryTool_modified {
 							subset.add(owlClass);
 					}
 				}
-				LOG.info("Number of found classes for dl query subclass of: "+classes.size());
+				logger.info("Number of found classes for dl query subclass of: " + classes.size());
 			}
-
-			LOG.info("Evaluating the class expression took " + (System.currentTimeMillis() - start) + "ms.");
-			start = System.currentTimeMillis();
-		}
-		catch (Exception e) {
+			logger.info("Evaluating the class expression took " + (System.currentTimeMillis() - start) + "ms.");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*
-	  	finally {
-			reasoner.dispose();
-		} 
-		*/
 		return subset;
 	}
 

@@ -8,7 +8,6 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.*;
 import owltools.graph.OWLGraphWrapper;
-//import org.semanticweb.HermiT.Reasoner;
 
 import uk.ac.manchester.cs.jfact.JFactFactory;
 
@@ -23,7 +22,7 @@ public class DLReasoner {
 		try {
 			graph = ont.getGraph();
 			logger.info("Creating a new reasoner.");
-			OWLOntology o = graph.getSourceOntology();
+//			OWLOntology o = graph.getSourceOntology();
 			reasoner = (new JFactFactory()).createReasoner(ont.getGraph().getSourceOntology());
 			if (!reasoner.isPrecomputed(InferenceType.CLASS_HIERARCHY)) {
 				logger.info("Precomputing inferences...");
@@ -40,12 +39,8 @@ public class DLReasoner {
 		ArrayList<String> res = new ArrayList<String>();
 		try {
 			Set<OWLClass> classes = DLQueryTool_modified.executeDLQuery(translateToIDs(dlQuery), graph, reasoner);
-//			if (classes.isEmpty())
-//				res.add("Your query returned 0 results.");
-//			else 
 			for (OWLClass c : classes) {
-				//		res.add(idToName(c.toStringID()));
-				res.add(graph.getIdentifier(c));
+			    res.add(getFormattedResult(c));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,23 +53,23 @@ public class DLReasoner {
 		String[] splitted = nlDLQuery.split("[\\s�]+");
 		String res = "";
 		for (String tok : splitted) {
-			// try getting it by label, meybe it is a relation
-			if (graph.getOWLObjectByIdentifier(tok) != null)
+			// try getting it by label, may be it is a relation
+			if (graph.getOWLObjectByIdentifier(tok) != null){
 				res += tok + " ";
-			else {
-				tok = tok.replaceAll("_", " ");
-				if (graph.getOWLObjectByLabel(tok) != null)
-//					res += graph.getOWLObjectByLabel(tok).toString().replaceAll("<http://purl.obolibrary.org/obo/|>|chebi#"+
-//				"|<http://purl.obolibrary.org/obo#|obo#|&obo2;", "") + " ";
-					res += graph.getIdentifier(graph.getOWLObjectByLabel(tok)) + " ";
-				else if (tok.toLowerCase().matches("some|only|value|or|and|exactly|not|inverse|min|max|self|\\(|\\)"))
+			}	else {
+				// some ontologies use underscore to separate words
+				// while others use space so try both...
+				if (graph.getOWLObjectByLabel(tok) != null) {
+					res += graph.getOWLObjectByLabel(tok) + " ";
+				} else if (graph.getOWLObjectByLabel(tok.replaceAll("_", " ")) != null) {
+					res += graph.getOWLObjectByLabel(tok.replaceAll("_", " ")) + " ";
+				} else if (tok.toLowerCase().matches("some|only|value|or|and|exactly|not|inverse|min|max|self|\\(|\\)")) {
 					res += tok + " ";
-				else {
-					//	res += tok + " ";
+				} else {
 					Exception e = new Exception("Token <b>" + tok + "</b> could not be matched to an entry in our ontology. Please check the spelling.");
-					throw e;
+					logger.error(e.getMessage());
 				}
-			}
+			 }
 		}
 		logger.debug("Query was translated to : "+res.trim());
 		return res.trim();
@@ -101,12 +96,22 @@ public class DLReasoner {
 					return true;
 			}
 		} catch (Exception e) {
-			//exceptionMessage += "<span class=\\\"expectedTokensStyle\\\">";
 			exceptionMessage += e.getMessage();
 			exceptionMessage = exceptionMessage.replaceAll("\n", "<br/>");
-			//exceptionMessage += "</span>";
+			logger.error(exceptionMessage);
 			throw new Exception(exceptionMessage);
 		}
 		return false;
 	}
+
+	private String getFormattedResult(OWLClass owlClass) {
+		//ChEBI id uses  webservices in the front end to get more data like structures , entry status and so on.
+		//Others are linked to obo library.
+		if (!owlClass.toString().contains("CHEBI")) {
+			String content = graph.getLabel(owlClass) + "(" + graph.getIdentifier(owlClass) + ")";
+			return "<a href ='" + owlClass.toString().replace("<", "").replace(">", "") + "' target='blank' >" + content + "</a>";
+		}
+		return graph.getIdentifier(owlClass);
+	}
+
 }

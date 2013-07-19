@@ -8,7 +8,7 @@ $(document).ready(function() {
 			$(this).trigger('editEvent');
 		}
 		if ((e.keyCode || e.which) ==  $.ui.keyCode.DELETE || (e.keyCode || e.which) == $.ui.keyCode.BACKSPACE){ // space
-			var splitted = $(this).text().split(/[\s ]+/);
+			var splitted = $(this).text().split(/[\sï¿½]+/);
 			var lastToken =  splitted.pop();
 			while (lastToken === "")
 				lastToken = splitted.pop();
@@ -23,7 +23,7 @@ $(document).ready(function() {
 	$("div.dl_edit").bind('editEvent', function() {
 		var text = $(this).text();
 		$(this).html(colorText(text));
-		var splitted = text.split(/[\s ]+/);
+		var splitted = text.split(/[\sï¿½]+/);
 		var lastToken =  splitted.pop();
 		while (lastToken === "")
 			lastToken = splitted.pop();
@@ -43,7 +43,7 @@ $(document).ready(function() {
 		_idleSecondsCounter = 0;
 	});
 	
-	window.setInterval(CheckIdleTime, 1000); // every one sec
+	window.setInterval(CheckIdleTime, 100); // every one sec
 	function CheckIdleTime() {
 	    _idleSecondsCounter++;
 	    if ((IDLE_TIMEOUT-_idleSecondsCounter) == 0) { 
@@ -118,7 +118,7 @@ $(document).ready(function() {
 		// returns the simple text from the div, so what the text that the user sees in the "edit box" in nice colors
 		return $("div.dl_edit").text();
 	}
-	
+
 });
 
 
@@ -156,7 +156,7 @@ function colorThis(introdString){ //decide how to color each term and return htm
 
 
 function colorText(text){
-	var splitted = text.split(/[\s ]+/);
+	var splitted = text.split(/[\sï¿½]+/);
 	var edited = "";
 	while (splitted.length > 0){
 		var current = splitted.pop();
@@ -266,7 +266,7 @@ function loadRecentQueries(){
 		jQuery('<h3  class="recentQueries" title="The recent queries box will store the last 10 used queries. The number in brackets indicates the number of results for each query and the red color indicates queries which did not have a valid syntax.">Recent Queries</h3>').appendTo(this._container); 
 		this._list = jQuery('<ul class="recentQueries"> </ul>').appendTo(this._container);
 		for (var i=0;i<window.queryHist.length;i++){
-			jQuery('<li> <a class="recentQueries" href="#" onclick="javascript:histEntryClick(\'hist'+(i+1)+'\');" id="hist'+(i+1)+'" >' +
+			jQuery('<li> <a class="recentQueries" href="#" onclick="histEntryClick(\'hist'+(i+1)+'\');" id="hist'+(i+1)+'" >' +
 					colorText(window.queryHist[i].split("&nbsp;&nbsp;&nbsp;")[0]) + "&nbsp;&nbsp;&nbsp;" + window.queryHist[i].split("&nbsp;&nbsp;&nbsp;")[1] +
 		//			window.queryHist[i] +
 					'</a></li>').appendTo(this._list);

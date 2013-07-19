@@ -9,7 +9,6 @@ if they contain special characters not allowed in URLs. A common example is ":",
 If you use OWL and no changes are made, just remove [.replaceAll("CHEBI_", "CHEBI:")] from DLQueryTool_modified.java or adjust it according to your ontology.
 4. Set custom variables in the first part of globalVariables.js as described in the file.
 5. Set up memory to at least 2GB and density limit as described "-Xms1024m -Xmx2048m -XX:MaxPermSize=128m -DentityExpansionLimit=1000000".
-6. After deploying the webapp call  " /adminInput.jsp " and load the ontology.
-7. You should see the message about loading the ontology.
+6. While deploying, the ontology will loaded automatically (it takes a while depending upon the ontology)
 
 Note: without DensityExpansionLimit, the RDFXML  parser will fail to parse the owl/obo file.

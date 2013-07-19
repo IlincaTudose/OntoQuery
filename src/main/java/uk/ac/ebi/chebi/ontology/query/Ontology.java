@@ -6,9 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.model.*;
@@ -25,6 +23,9 @@ public class Ontology {
 	transient Logger logger = Logger.getLogger(Ontology.class);
 
 	private String ONTOLOGY_IRI = "ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi-disjoints.owl";
+//	private String ONTOLOGY_IRI = "http://svn.code.sf.net/p/fbbtdv/code/fbbt/releases/fbbt-simple.owl";
+//	private String ONTOLOGY_IRI = "http://www.geneontology.org/ontology/go-simple.owl";
+//	private String ONTOLOGY_IRI = "http://www.imbi.uni-freiburg.de/ontology/biotop/1.0/";
     private static OWLOntology chebiOntology;
 	private static OWLGraphWrapper graph;
 	private String classString = "";
@@ -63,6 +64,7 @@ public class Ontology {
 					relationString += label.replaceAll(" ", "_") + "###";
 				}
 			}
+			logger.info("relations: "+ relationString);
 			logger.info("Ontology is initialised completely");
 		}catch(Exception e){
 			e.printStackTrace();
@@ -74,34 +76,33 @@ public class Ontology {
 	protected boolean isClass(String name){
 		return classList.contains(name);
 	}
-	
-	protected String getMatchingClassNames(String patt){
-		// returns the 50 first best matching classNames
-		// if there were no letters typed return a pre-defined list and spare some time.
-		if (patt.equals(".") || patt.equals(""))
-			return "coumarins###flavonoids###triterpenoids###sesquiterpenoids###alkaloids###anti-HIV_agent###antibacterial_agent###"+
-						"antioxidant###antibiotic###anti-inflammatory_agent###organic_heteropolycyclic_compound###phosphoglycerolipid###"+
-						"steroid###ganglioside###phosphosphingolipid###organophosphate_oxoxanion###carboxylic_acid###fatty_acid###"+
-						"acyl-CoA###oligosaccharide_oligosaccharide###amino_oligosaccharide###secondary_metabolite###antineoplastic_agent###"+
-						"enzyme_inhibitor###enzyme_activator###agonist###antagonist";
-		else {
-			Pattern p = Pattern.compile(patt.toLowerCase());
-			Matcher m;
-			String res = "";
-			ArrayList<String> candidates = new ArrayList<String>();
-			for (String s: classList){
-				m = p.matcher(s.toLowerCase());
-				if (m.find())
-					candidates.add(s);
+
+	protected String getMatchingClassNames(String pattern) {
+		long t1 = System.currentTimeMillis();
+		String result = "";
+		List<String> list = new ArrayList<String>();
+		if (pattern.equals(".") && pattern.equals("")) {
+			list = classList.subList(0, 50);
+			// if there were no letters typed return a pre-defined list and spare some time.
+			// returns the 50 first best matching classNames
+		} else {
+			for (String owlClass : classList) {
+				if (owlClass.contains(pattern)) {
+					list.add(owlClass);
+					if (pattern.length() < 3 && list.size() == 50) break;
+				}
 			}
-			Collections.sort(candidates, new CustomComparator(patt));
-			for (int i = 0; i < 50 && i < candidates.size(); i++){
-				res += candidates.get(i) + "###";
-			}		
-			return res; 
+		logger.info("list size : " + list.size());
+			Collections.sort(list, new CustomComparator(pattern));
 		}
+		for (int i = 0; i < 50 && i < list.size(); i++) {
+			result += list.get(i) + "###";
+		}
+		long t2 = System.currentTimeMillis();
+		logger.info("total time :" + (t2 - t1) + "ms");
+		return result;
 	}
-	
+
 	protected OWLGraphWrapper getGraph(){
 		return graph;
 	}
