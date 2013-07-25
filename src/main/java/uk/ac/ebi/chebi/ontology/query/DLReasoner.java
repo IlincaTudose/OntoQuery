@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.*;
 import owltools.graph.OWLGraphWrapper;
 
@@ -17,7 +16,7 @@ public class DLReasoner {
 
 	private static OWLGraphWrapper graph;
 	private static OWLReasoner reasoner;
-
+	private static StringBuilder exportContent ;
 	public DLReasoner(Ontology ont) {
 		try {
 			graph = ont.getGraph();
@@ -36,6 +35,7 @@ public class DLReasoner {
 	}
 
 	protected String[] getQueryResults(String dlQuery) {
+		exportContent =  new StringBuilder();
 		ArrayList<String> res = new ArrayList<String>();
 		try {
 			Set<OWLClass> classes = DLQueryTool_modified.executeDLQuery(translateToIDs(dlQuery), graph, reasoner);
@@ -85,7 +85,7 @@ public class DLReasoner {
 	}
 
 	protected boolean checkSyntax(String query) throws Exception {
-		String idQuery = "";
+		String idQuery ;
 		String exceptionMessage = " ";
 		try {
 			if (query.equalsIgnoreCase(""))
@@ -104,14 +104,26 @@ public class DLReasoner {
 		return false;
 	}
 
-	private String getFormattedResult(OWLClass owlClass) {
+	protected String getFormattedResult(OWLClass owlClass) {
 		//ChEBI id uses  webservices in the front end to get more data like structures , entry status and so on.
 		//Others are linked to obo library.
+		setExporterData(owlClass);
 		if (!owlClass.toString().contains("CHEBI")) {
 			String content = graph.getLabel(owlClass) + "(" + graph.getIdentifier(owlClass) + ")";
 			return "<a href ='" + owlClass.toString().replace("<", "").replace(">", "") + "' target='blank' >" + content + "</a>";
 		}
 		return graph.getIdentifier(owlClass);
 	}
+
+	protected void setExporterData(OWLClass owlClass){
+		exportContent.append(graph.getIdentifier(owlClass)).append("\t").
+				append(graph.getLabel(owlClass)).append("\t").
+				append(owlClass.toString().replace("<", "").replace(">", "")).append("\n");
+	}
+
+	protected String getExportContent(){
+		return exportContent.toString();
+	}
+
 
 }

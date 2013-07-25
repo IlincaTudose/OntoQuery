@@ -2,8 +2,6 @@ package uk.ac.ebi.chebi.ontology.query;
 
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-
 // Singleton class
 public class DLQueryServer {
 
@@ -13,7 +11,7 @@ public class DLQueryServer {
 	private static DLQueryServer serverInstance = null;
 	private static final Object classLock = DLQueryServer.class;
 	private String[] results;
-	
+	private String exportContent;
 	private DLQueryServer(){
 		// ontology is loaded into a graph
 		ont = new Ontology();
@@ -30,12 +28,11 @@ public class DLQueryServer {
 			return serverInstance;
 		}
 	}
-	
-	public String getClassNames(){
-		return ont.getClasses();
-//		return "role###chemical_entity###base";
+
+	public String getExportContent() {
+		return exportContent;
 	}
-	
+
 	public String getMatchingClassNames(String pattern){
 		return ont.getMatchingClassNames(pattern);
 	}
@@ -51,6 +48,7 @@ public class DLQueryServer {
 	
 	public void computeDLQueryResults(String query){
 		results = dlReasoner.getQueryResults(query);
+		exportContent = (dlReasoner.getExportContent());
 	}
 	
 	// returns all results
@@ -58,36 +56,6 @@ public class DLQueryServer {
 		return results;
 	}
 
-	public String[] getResults(int from, int to){
-		String[] res = new String[to-from];
-		for (int i = from; i < to; i++){
-			res[i-from] = results[i];
-		}
-		return res;
-	}
-	
-	public int getResultsNumber(){
-		return results.length;
-	}
-	
-	// TODO this shouldn't be visible! I need it now to output the translated query.
-	public String getTranslationToID(String query) throws Exception{
-		return dlReasoner.translateToIDs(query);
-	}
-	
-	public void reloadOntology(){
-		ont = new Ontology();
-	}
-	
-	public void reloadReasoner(){
-		dlReasoner.release();
-		dlReasoner = new DLReasoner(ont);
-	}
-	
-	public String getMockUpAutoComplete(){
-		return "has_role###nas_s###aabhas###x_has###1Has";
-	}
-	
 	public boolean hasValidSyntax(String query) throws Exception{
 		return dlReasoner.checkSyntax(query);
 	}

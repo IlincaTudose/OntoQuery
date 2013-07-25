@@ -20,4 +20,12 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>TsvExporterServlet</servlet-name>
+        <servlet-class>uk.ac.ebi.chebi.ontology.servlet.TsvExporterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TsvExporterServlet</servlet-name>
+        <url-pattern>/getTsv</url-pattern>
+    </servlet-mapping>
 </web-app>

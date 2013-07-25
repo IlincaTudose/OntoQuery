@@ -22,11 +22,10 @@ public class Ontology {
 
 	transient Logger logger = Logger.getLogger(Ontology.class);
 
-	private String ONTOLOGY_IRI = "ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi-disjoints.owl";
-//	private String ONTOLOGY_IRI = "http://svn.code.sf.net/p/fbbtdv/code/fbbt/releases/fbbt-simple.owl";
+//	private String ONTOLOGY_IRI = "fbbt-simple.owl";
+//	private String ONTOLOGY_IRI = "ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi-disjoints.owl";
+	private String ONTOLOGY_IRI = "http://svn.code.sf.net/p/fbbtdv/code/fbbt/releases/fbbt-simple.owl";
 //	private String ONTOLOGY_IRI = "http://www.geneontology.org/ontology/go-simple.owl";
-//	private String ONTOLOGY_IRI = "http://www.imbi.uni-freiburg.de/ontology/biotop/1.0/";
-    private static OWLOntology chebiOntology;
 	private static OWLGraphWrapper graph;
 	private String classString = "";
 	private String relationString = "";
@@ -41,7 +40,11 @@ public class Ontology {
 			bw.close();
 
 			logger.debug("Ontology written to temp file");
-			chebiOntology = pw.parse(temp.toString());
+			OWLOntology chebiOntology = pw.parse(temp.toString());
+
+//			To load from local resources.
+//			String newIri = IRI.create(Ontology.class.getClassLoader().getResource(ONTOLOGY_IRI)).toString();
+//			OWLOntology chebiOntology = pw.parse(newIri);
 
 			graph = new OWLGraphWrapper(chebiOntology);
 			logger.debug("OWL file parsed and graph is created");
@@ -64,7 +67,8 @@ public class Ontology {
 					relationString += label.replaceAll(" ", "_") + "###";
 				}
 			}
-			logger.info("relations: "+ relationString);
+			temp.delete();
+//			logger.info("relations: "+ relationString);
 			logger.info("Ontology is initialised completely");
 		}catch(Exception e){
 			e.printStackTrace();
@@ -120,10 +124,6 @@ public class Ontology {
 		return graph.getLabel(graph.getOWLObjectByIdentifier(id));
 	}
 	
-	protected IRI getIRI(){
-		return IRI.create(ONTOLOGY_IRI);
-	}
-
 	protected  String getStringFromInputStream(InputStream is) {
 		BufferedReader br = null;
 		StringBuilder sb = new StringBuilder();

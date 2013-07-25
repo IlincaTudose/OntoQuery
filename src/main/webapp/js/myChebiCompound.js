@@ -171,7 +171,7 @@ Biojs.ChEBICompound = Biojs.extend(
 		jQuery('<ul> <li class="bodynavLi" style="background:none; padding:0px; border:0px;"> <a href="'+
 				'http://www.ebi.ac.uk/chebi/searchId.do?chebiId=' + chebiId + '">'+
 				'<img src="' + this.opt.imageUrl + '?defaultImage=true&imageIndex=0&chebiId=' + chebiId
-				+ '" width="200" height="200" style="border:1px solid black"/>'
+				+ '" width="200" height="200"  id='+ this.opt.id+'  onerror="hide(id)"  style="border:1px solid black"/>'
 				+' </a></li></ul>').appendTo(this._imageContainer);
 		
 		image = jQuery('<img id="image_' + chebiId + '"/>');
@@ -295,7 +295,8 @@ Biojs.ChEBICompound = Biojs.extend(
 			while (stars-- > 0){
 				starsString += '<img src="images/goldenstar.gif">\n';
 			}
-			jQuery('<tr> <td> <div title="This entity has been manually annotated by the ChEBI Team."> Stars: '+ starsString +'</div> </td> </tr>').appendTo( container );			
+            var title = data["entityStar"].value == 3 ?  "This entity has been manually annotated by the ChEBI Team." : "This entity is unchecked by the ChEBI Team.";
+			jQuery('<tr> <td> <div title="'+title +'"> Stars: '+ starsString +'</div> </td> </tr>').appendTo( container );
 			this.raiseEvent( Biojs.ChEBICompound.EVT_ON_SUMMARY_LOADED,{
 				id: data.Identifier
 			});
@@ -362,3 +363,7 @@ Biojs.ChEBICompound = Biojs.extend(
 	EVT_ON_REQUEST_ERROR: "onRequestError"
 	
 });
+
+function hide(id){
+    document.getElementById(id).hidden = true;
+}

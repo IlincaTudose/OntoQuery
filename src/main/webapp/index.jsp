@@ -12,34 +12,34 @@
         <tbody>
         <tr>
             <td class="leftmenucell" id="leftmenucell">
-                <%@ include file="menu.html" %>
+                <%--<%@ include file="menu.html" %>--%>
             </td>
             <td></td>
             <td id="contentsarea" class="contentsarea" style="border-left: 1px solid #dedede;">
-                <div class="breadcrumbs">
+                <%--<div class="breadcrumbs">
                     <a href="http://www.ebi.ac.uk/" class="firstbreadcrumb">EBI</a><a href ="http://www.ebi.ac.uk/Databases/">Databases</a><a href ="http://www.ebi.ac.uk/Databases/smallmolecules.html">Small Molecules</a><a href="http://www.ebi.ac.uk/chebi">ChEBI</a><a href="/chebi/tools/ontoquery">OntoQuery</a>
                 </div>
                 <h1 class="local-header"><a href="/chebi/tools/ontoquery" title="Back to OntoQuery homepage">OntoQuery</a></h1>
-                <div id="firstPageEditBox" style="min-height: 500px;">
+               --%> <div id="firstPageEditBox" style="min-height: 500px;vertical-align: middle">
                     <div id="editBoxDiv">
                         <%@ include file="userInput.jsp" %>
                     </div>
                     <p> Examples: "
-                        <a href="response.jsp?submit=Submit&hiddenQuery=has_role+some+fungicide+&page=1" class="recentQueries">
-                            <span class="relationStyle">has_role </span>
+                        <a href="response.jsp?submit=Submit&hiddenQuery=has_postsynaptic_terminal_in+some+medulla+&page=1" class="recentQueries">
+                            <span class="relationStyle">has_postsynaptic_terminal_in </span>
                             <span class="restriction">some </span>
-                            <span class="classStyle">fungicide</span>
+                            <span class="classStyle">medulla</span>
                         </a>" &nbsp; &nbsp; or &nbsp; &nbsp;
-                        "<a href="response.jsp?submit=Submit&hiddenQuery=%28+phenols+or+coumarins+%29+and+has_role+some+antibiotic+&page=1" class="recentQueries">
+                        "<a href="response.jsp?submit=Submit&hiddenQuery=%28+has_postsynaptic_terminal_in+some+lobula+%29+and+has_presynaptic_terminal_in+some+medulla+&page=1" class="recentQueries">
                             <span class="paranthesis">(</span>
-                            <span class="classStyle">phenols </span>
-                            <span class="booleanConstructor">or </span>
-                            <span class="classStyle">coumarins </span>
+                            <span class="classStyle">has_postsynaptic_terminal_in </span>
+                            <span class="restriction">some </span>
+                            <span class="classStyle">lobula </span>
                             <span class="paranthesis">) </span>
                             <span class="booleanConstructor">and </span>
-                            <span class="relationStyle">has_role </span>
+                            <span class="relationStyle">has_presynaptic_terminal_in </span>
                             <span class="restriction">some </span>
-                            <span class="classStyle">antibiotic </span>
+                            <span class="classStyle">medulla </span>
                         </a>" .</p>
                     <br/>
                     <br/>
@@ -88,7 +88,7 @@
     </table>
 
     <!-- chebi footer -->
-    <%@ include file="footer.html" %>
+    <%--<%@ include file="footer.html" %>--%>
 
 </div>
 <!--  end of content div -->
