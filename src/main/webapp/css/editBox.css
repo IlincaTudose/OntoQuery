@@ -1,69 +1,73 @@
 @CHARSET "ISO-8859-1";
 
 .booleanConstructor {
-	color: #00CC99;
+    color: #00CC99;
 }
 
 .restriction {
-	color: #CC6699;
+    color: #CC6699;
 }
 
 .paranthesis {
-	color: #303030;
+    color: #303030;
 }
 
 .classStyle {
-	color: #000000;
+    color: #000000;
 }
 
 .relationStyle {
-	color: #999966
+    color: #999966
 }
 
 #incompleteIcon {
-	float: left;
-	height: 20px;
-	visibility: hidden;
+    float: left;
+    height: 20px;
+    visibility: hidden;
+    padding-right: 5px;
+    margin-top: 10px;
 }
 
 .dl_edit { /* text styling */
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: small;
-	font-weight: bold;
-	/* box styling */
-	border-style: solid;
-	border-width: 1px;
-	border-color: #93A3A3;
-	/* It's nicer to leave a small space between the border and the text */
-	padding-left: 3px;
-	/* set size */
-	width: 300px;
-	min-height: 20px;
-	max-height: 100px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	/*force line break for long words */
-	white-space: pre-wrap; /* CSS3 */
-	white-space: -moz-pre-wrap; /* Firefox */
-	white-space: -pre-wrap; /* Opera <7 */
-	white-space: -o-pre-wrap; /* Opera 7 */
-	word-wrap: break-word; /* IE */
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    font-weight: bold;
+    /* box styling */
+    border-style: solid;
+    border-width: 1px;
+    border-color: #93A3A3;
+    background-color: white;
+    margin-top: 1.5%;
+    /* It's nicer to leave a small space between the border and the text */
+    /*padding-left: 3px;*/
+    /* set size */
+    /*width: 300px;*/
+    min-height: 20px;
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*force line break for long words */
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap; /* Opera <7 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* IE */
 }
 
 .errorStyle {
-	font-weight: bold;
-	color: red;
+    font-weight: bold;
+    color: red;
 }
 
 .expectedTokensStyle {
-	color: #476B6B;
-	padding-left: 5px;
-	font-weight: bold;
+    color: #476B6B;
+    padding-left: 5px;
+    font-weight: bold;
 }
 
 #editBoxDiv{
-	/*padding-top: 100px;*/
-	margin: auto;
+    /*padding-top: 100px;*/
+    margin: auto;
 }
 
 .headerBG {

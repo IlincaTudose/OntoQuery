@@ -23,8 +23,8 @@ public class Ontology {
 	transient Logger logger = Logger.getLogger(Ontology.class);
 
 //	private String ONTOLOGY_IRI = "fbbt-simple.owl";
-//	private String ONTOLOGY_IRI = "ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi-disjoints.owl";
-	private String ONTOLOGY_IRI = "http://svn.code.sf.net/p/fbbtdv/code/fbbt/releases/fbbt-simple.owl";
+	private String ONTOLOGY_IRI = "ftp://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi-disjoints.owl";
+//	private String ONTOLOGY_IRI = "http://svn.code.sf.net/p/fbbtdv/code/fbbt/releases/fbbt-simple.owl";
 //	private String ONTOLOGY_IRI = "http://www.geneontology.org/ontology/go-simple.owl";
 	private static OWLGraphWrapper graph;
 	private String classString = "";

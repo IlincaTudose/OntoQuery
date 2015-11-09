@@ -10,18 +10,17 @@
 			<tbody>
 				<tr>
                     <td class="leftmenucell" id="leftmenucell">
-                        <%--<%@ include file="menu.html" %>--%>
+                        <%@ include file="menu.html" %>
                     </td>
 					<td style="border-left: 1px solid #dedede; padding-left: 10px;">
-                   <%-- <div class="breadcrumbs">
+                    <div class="breadcrumbs">
                         <a href="http://www.ebi.ac.uk/" class="firstbreadcrumb">EBI</a><a href ="http://www.ebi.ac.uk/Databases/">Databases</a><a href ="http://www.ebi.ac.uk/Databases/smallmolecules.html">Small Molecules</a><a href="http://www.ebi.ac.uk/chebi">ChEBI</a><a href="/chebi/tools/ontoquery">OntoQuery</a>
                     </div>
                     <h1 class="local-header"><a href="/chebi/tools/ontoquery" title="Back to OntoQuery homepage">OntoQuery</a></h1>
---%>
 
 						<div id="helpContent">
 
-							<h3>OntoQuery Tutorial (Based on ChEBI Ontology)</h3>
+							<h3>OntoQuery Tutorial</h3>
 
 							<p>The OntoQuery is an online <a href="http://en.wikipedia.org/wiki/Web_Ontology_Language">OWL</a>
 								query tool meant to ease your experience of retrieving data from
@@ -266,7 +265,7 @@
 			</tbody>
 		</table>
 
-        <%--<%@ include file="footer.html" %>--%>
+        <%@ include file="footer.html" %>
 	</div>
 </body>
 </html>

@@ -5,18 +5,31 @@
   Time: 11:48
   To change this template use File | Settings | File Templates.
 -->
-<html>
+<html class="fontface">
 <head>
 
-    <link rel="stylesheet"  href="http://www.ebi.ac.uk/inc/css/sidebars.css"   type="text/css" />
-    <link rel="stylesheet"  href="http://www.ebi.ac.uk/inc/css/basicstyles.css"   type="text/css" />
-    <link rel="stylesheet"  href="http://www.ebi.ac.uk/inc/css/contents.css"   type="text/css" />
-    <link rel="stylesheet"  href="http://www.ebi.ac.uk/inc/css/headings.css"   type="text/css" />
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css" type="text/css">
+    <link rel="stylesheet" href="/chebi/layouts/styles/chebiColorScheme.css" type="text/css"/>
 
-    <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/ebi-mitigation.css" />
-    <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/embl-petrol-colours.css" />
+    <link rel="SHORTCUT ICON" href="/chebi/images/ChEBI_logo_16.ico"/>
+
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
+
+    <script type="text/javascript">
+        function showSubMenu(menu) {
+            // First reset - hide all menus..
+            document.getElementById("browse").style.display = "none";
+            document.getElementById("documentation").style.display = "none";
+            document.getElementById("tool").style.display = "none";
+
+            //Then display only the menu you want...
+            $(menu).get(0).style.display = "inline";
+            $(menu).get(0).style.paddingTop = "0px";
+            $(menu).get(0).style.marginTop = "0px";
+        }
+    </script>
+
     <link rel="stylesheet" type="text/css" href="css/editBox.css">
     <link rel="stylesheet" href="css/jquery/base/jquery.ui.all.css">
     <link rel="stylesheet" href="css/jquery/base/jquery.ui.autocomplete.css">
@@ -33,40 +46,128 @@
 </head>
 
 
-<body style="padding-top: 0px; margin: auto;">
+<body>
 
-<div class="headerdiv" id="headerdiv">
-    <div class="header">
-        <!--<div id="global-masthead" class="masthead grid_24">-->
-            <!--&lt;!&ndash;This has to be one line and no newline characters&ndash;&gt;-->
-            <!--<a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img-->
-                    <!--src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"-->
-                    <!--alt="EMBL European Bioinformatics Institute" /></a>-->
+<div id="wrapper" class="container_24">
 
-            <!--<div class="nav">-->
-                <!--<ul id="global-nav">-->
-                    <!--&lt;!&ndash; set active class as appropriate &ndash;&gt;-->
-                    <!--<li class="first active" id="services"><a-->
-                            <!--href="//www.ebi.ac.uk/services">Services</a></li>-->
-                    <!--<li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>-->
-                    <!--<li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>-->
-                    <!--<li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>-->
-                    <!--<li id="about" class="last"><a href="//www.ebi.ac.uk/about">About-->
-                        <!--us</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>-->
+    <header>
+        <!--<%-- GLOBAL HEADER SECTION STARTS--%>-->
+        <div id="global-masthead" class="masthead grid_24">
+            <a href="http://www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img
+                    src="http://www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"
+                    alt="EMBL European Bioinformatics Institute"></a>
+            <nav>
+                <ul id="global-nav">                    <!-- set active class as appropriate -->
+                    <li id="services" class=" first active"><a href="http://www.ebi.ac.uk/services" title="Services">Services</a>
+                    </li>
+                    <li id="research" class=""><a href="http://www.ebi.ac.uk/research" title="Research">Research</a>
+                    </li>
+                    <li id="training" class=""><a href="http://www.ebi.ac.uk/training" title="Training">Training</a>
+                    </li>
+                    <li id="industry" class=""><a href="http://www.ebi.ac.uk/industry" title="Industry">Industry</a>
+                    </li>
+                    <li id="about" class=" last"><a href="http://www.ebi.ac.uk/about" title="About us">About us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!--<%-- GLOBAL HEADER SECTION ENDS--%>-->
 
-        <div id="local-masthead" class="headerBG grid_24">
+        <!--<%-- LOCAL HEADER SECTION STARTS--%>-->
+        <div id="local-masthead" class="headerBG masthead grid_24 nomenu">
 
-            <div id="local-title" class="grid_24 logo-title-strapline">
-                <!--<a href="/chebi" title="Back to ChEBI homepage">-->
-                    <!--<img src="images/ChEBI_logo.png" alt="ChEBI logo" width="64px" height="64px"></a>-->
-                        <!--<span> <h1 style="font-size: 400%"><a href="/chebi" title="Back to ChEBI homepage">ChEBI</a></h1>-->
-                        <span> <h1 style="font-size: 400%"><a href="/chebi/tools/ontoquery" title="Back to OntoQuery homepage">OntoQuery</a></h1>
-                            <br> <p>&nbsp;&nbsp;&nbsp;&nbsp;An ontology query engine</p> </span>
+            <!-- local-title -->
+            <div class="grid_12 alpha logo-title" id="local-title">
+                <a href="/chebi/init.do" title="Back to ChEBI homepage">
+                    <img src="/chebi/images/ChEBI_logo.png" alt="ChEBI logo" width="64" height="64"></a>
+                 <span>
+                     <h1><a href="/chebi/init.do" title="Back to ChEBI homepage">ChEBI</a></h1>
+                 </span>
             </div>
+            <!-- /local-title -->
+
+            <!-- local-search -->
+            <div class="grid_12 omega">
+                <form id="local-search"
+                      name="searchFreeText"
+                      action="/chebi/advancedSearchFT.do"
+                      method="post">
+
+                    <fieldset>
+
+                        <div class="left">
+                            <label>
+                                <input type="text" name="searchString" id="local-searchbox">
+                            </label>
+                            <span class="examples">
+                                Examples:
+                                <a href="/chebi/advancedSearchFT.do?searchString=iron*">iron*</a>,
+                                <a href="/chebi/advancedSearchFT.do?searchString='InChI=1S/H2O/h1H2'">InChI=1S/H2O/h1H2</a>,
+                                <a href="/chebi/advancedSearchFT.do?searchString=water">water</a></span>
+                        </div>
+
+                        <div class="right">
+                            <input type="submit" name="submit" value="Search" class="submit">
+                            <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search, with whatever features you want available -->
+                            <span class="adv"><a href="/chebi/advancedSearchForward.do" id="adv-search" title="Advanced">Advanced</a></span>
+                        </div>
+
+                    </fieldset>
+
+                </form>
+            </div>
+            <!-- /local-search -->
+
+
+            <!-- local-nav -->
+            <nav>
+                <ul class="grid_24" id="local-nav">
+                    <!--<%--Main menus--%>-->
+                    <li class="first"><a href="/chebi/init.do">Home</a></li>
+                    <li class=""><a href="/chebi/advancedSearchForward.do">Advanced Search</a></li>
+                    <li class=""><a href="#" onclick="showSubMenu(browse)">Browse</a></li>
+                    <li class=""><a href="#" onclick="showSubMenu(documentation)">Documentation</a></li>
+                    <li class=""><a href="/chebi/downloadsForward.do">Download</a></li>
+                    <li class=""><a href="#" onclick="showSubMenu(tool)">Tools</a></li>
+                    <li class="last"><a href="/chebi/aboutChebiForward.do">About ChEBI</a></li>
+
+                    <!--<%--Functional Menus --%>-->
+                    <li class="functional last"><a href="http://www.ebi.ac.uk/chebi/submission/login"
+                                                   class="icon icon-functional" data-icon="n" target="_blank"
+                                                   title="Click here to add a new entry to ChEBI">Submit</a></li>
+                    <li class="functional"><a href="/chebi/userSettingsForward.do" class="icon icon-functional"
+                                              data-icon="s">Preferences</a></li>
+                    <li class="functional"><a href="/chebi/emailChebiForward.do" class="icon icon-generic" data-icon="E">Contact
+                        us</a></li>
+
+                    <!--<%--Sub menus--%>-->
+                    <ul id="browse" style="display: none;">
+                        <li><a href="/chebi/dina.do">DiNA</a></li>
+                        <li><a href="/chebi/statisticsForward.do">Statistics</a></li>
+                        <li><a href="/chebi/entityMonthForward.do">Entity of the Month</a></li>
+                        <li><a href="/chebi/periodicTableMolecularEntitiesForward.do">Periodic Table</a></li>
+                        <li><a href="http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=CHEBI" class='icon icon-generic'
+                               data-icon='x' target="_blank">Ontology</a></li>
+                    </ul>
+                    <ul id="documentation" style="display: none;">
+                        <li><a href="/chebi/tutorialForward.do">Tutorial</a></li>
+                        <li><a href="/chebi/userManualForward.do">User Manual</a></li>
+                        <li><a href="/chebi/annotationManualForward.do">Annotation Manual</a></li>
+                        <li><a href="/chebi/developerManualForward.do">Developer Manual</a></li>
+                        <li><a href="http://sourceforge.net/projects/chebi/" class='icon icon-generic' data-icon='x'
+                               target="_blank">Forum</a></li>
+                        <li><a href="/chebi/faqForward.do">FAQ's</a></li>
+                    </ul>
+                    <ul id="tool" style="display: none;">
+                        <li><a href="http://www.ebi.ac.uk/chebi/tools/binche/">BiNChE</a></li>
+                        <li><a href="http://www.ebi.ac.uk/chebi/tools/ontoquery/">OntoQuery</a></li>
+                        <li><a href="/chebi/jchempaint.do">JChemPaint</a></li>
+                        <li><a href="/chebi/webServices.do">Web Services</a></li>
+                    </ul>
+                </ul>
+            </nav>
+            <!-- /local-nav -->
 
         </div>
-    </div>
-</div>
+        <!--<%-- LOCAL HEADER SECTION ENDS--%>-->
+
+    </header>
