@@ -43,7 +43,7 @@
                 </a>" ,
 
 
-                "<a href="response.jsp?submit=Submit&hiddenQuery=%28+phenols+or+coumarins+%29+and+has_role+some+antibiotic+&page=1" class="recentQueries">
+                "<a href="response.jsp?submit=Submit&hiddenQuery=%28+phenols+or+coumarins+%29+and+has_role+some+antiseptic_drug+&page=1" class="recentQueries">
                 <span class="paranthesis">(</span>
                 <span class="classStyle">phenols </span>
                 <span class="restriction">or </span>
@@ -52,7 +52,7 @@
                 <span class="booleanConstructor">and </span>
                 <span class="relationStyle">has_role </span>
                 <span class="restriction">some </span>
-                <span class="classStyle">antibiotic </span>
+                <span class="classStyle">antiseptic_drug </span>
             </a>" .
             </td>
         </tr>

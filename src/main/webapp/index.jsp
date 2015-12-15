@@ -55,6 +55,21 @@
 
     </div>
 
+    <div id="citation" class="small-boxed-section grid_20">
+        <h4>To Cite OntoQuery</h4>
+
+        <p>If you use OntoQuery for your research, please cite our paper:</p>
+
+        <p style="padding: 5px 50px 5px;">
+
+            Tudose I, Hastings J, Muthukrishnan V, Owen G, Turner S, Dekker A, Kale N, Ennis M, Steinbeck C.
+            (2013) OntoQuery: easy-to-use web-based OWL querying.
+            Bioinformatics. <a href="http://bioinformatics.oxfordjournals.org/content/29/22/2955" target="_blank">doi:
+            10.1093/bioinformatics/btt514</a>
+        </p>
+
+    </div>
+
     <!-- chebi footer -->
     <%@ include file="footer.html" %>
 
