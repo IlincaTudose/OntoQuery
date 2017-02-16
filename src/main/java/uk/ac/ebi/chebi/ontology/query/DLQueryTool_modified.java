@@ -80,6 +80,7 @@ public class DLQueryTool_modified {
 			logger.warn("No classes found for query subclass of:" + dlQuery);
 		}
 		logger.info("Results found in " + (System.currentTimeMillis() - start) + "ms.");
+		System.gc();
 		return subset;
 	}
 
